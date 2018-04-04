@@ -44,6 +44,7 @@ def get_rmse_log(net, X_train, y_train):
 def get_net():
     net = gluon.nn.Sequential()
     with net.name_scope():
+        net.add(gluon.nn.Dense(256, activation="relu"))
         net.add(gluon.nn.Dense(1))
     net.initialize()
     return net
@@ -57,7 +58,7 @@ def train(net, X_train, y_train, X_test, y_test, epochs, verbose_epoch, learning
     if X_test is not None:
         test_loss = []
     #
-    batch_size = 100
+    batch_size = 10
     dataset_train = gluon.data.ArrayDataset(X_train, y_train)
     data_iter_train = gluon.data.DataLoader(dataset_train, batch_size,shuffle=True)
     #生成trainer
@@ -100,10 +101,10 @@ def train(net, X_train, y_train, X_test, y_test, epochs, verbose_epoch, learning
 
 #训练
 k=10
-epochs = 100
+epochs = 100000
 verbose_epoch = 95
-learning_rate = 5
-weight_decay = 0.0
+learning_rate = 0.0001
+weight_decay = 0.001
 
 
 #net = get_net()
